@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botanical Wonders - Plant Encyclopedia</title>
+    <style>
+        :root {
+            --primary-green: #3a7d44;
+            --secondary-green: #6a9a6e;
+            --light-green: #b8d8c0;
+            --lavender: #967bb6;
+            --lily: #f5f5f5;
+            --gladiolus: #db5e57;
+            --orchid: #d4d9e6;
+            --text-dark: #333;
+            --text-light: #555;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3d76d1ea-1126-4d11-b947-9fecd80b1e8c.png');
+            background-size: cover;
+            z-index: 1;
+        }
+
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        nav li {
+            margin: 0 1rem;
+        }
+
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: var(--light-green);
+            color: var(--primary-green);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .plants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .plant-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .plant-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .plant-image {
+            height: 200px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plant-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .plant-card:hover .plant-image img {
+            transform: scale(1.05);
+        }
+
+        .plant-info {
+            padding: 1.5rem;
+        }
+
+        .plant-name {
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .plant-latin {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .plant-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-green);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 0.5rem;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 1rem;
+        }
+
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-green);
+            border-bottom: 2px solid var(--primary-green);
+        }
+
+        footer {
+            background-color: var(--primary-green);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 0.5rem 0;
+            }
+            
+            .plants-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <h1>Botanical Wonders</h1>
+        <p>Discover the beauty and secrets of these fascinating plants</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#lavender">Lavender</a></li>
+            <li><a href="#lily">Lily of the Valley</a></li>
+            <li><a href="#gladiolus">Gladiolus</a></li>
+            <li><a href="#orchid">White Egret Orchid</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="plants-grid">
+            <!-- Lavender -->
+            <div class="plant-card" id="lavender">
+                <div class="plant-image">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3e6753e3-b4b6-4f2a-9584-0bad9e32d18d.png" alt="Field of purple lavender flowers under a blue sky with soft focus background" />
+                </div>
+                <div class="plant-info">
+                    <h2 class="plant-name">Lavender</h2>
+                    <p class="plant-latin">Lavandula</p>
+                    
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="openTab(event, 'lavender-definition')">Definition</button>
+                        <button class="tab-btn" onclick="openTab(event, 'lavender-facts')">Fun Facts</button>
+                        <button class="tab-btn" onclick="openTab(event, 'lavender-care')">Care</button>
+                    </div>
+                    
+                    <div id="lavender-definition" class="tab-content active">
+                        <p>Lavender is a flowering plant in the mint family, known for its fragrant purple flowers and silvery-green foliage. Native to the Mediterranean region, it's prized for its calming scent and versatile uses in aromatherapy, cooking, and decoration.</p>
+                    </div>
+                    
+                    <div id="lavender-facts" class="tab-content">
+                        <ul>
+                            <li>Ancient Romans used lavender for bathing, cooking, and scenting the air.</li>
+                            <li>The name comes from the Latin "lavare" meaning "to wash" because it was used in baths.</li>
+                            <li>There are over 45 species of lavender and hundreds of varieties.</li>
+                            <li>Lavender honey is a premium product produced in the Mediterranean region.</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="lavender-care" class="tab-content">
+                        <ul>
+                            <li><strong>Sunlight:</strong> Full sun (6+ hours daily)</li>
+                            <li><strong>Water:</strong> Drought-tolerant; water when soil is dry</li>
+                            <li><strong>Soil:</strong> Well-draining, slightly alkaline</li>
+                            <li><strong>Pruning:</strong> Cut back by 1/3 in early spring</li>
+                            <li><strong>Hardiness:</strong> Zones 5-9, depending on variety</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lily of the Valley -->
+            <div class="plant-card" id="lily">
+                <div class="plant-image">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/78360058-2118-4933-b566-810b94a5ec57.png" alt="Delicate white bell-shaped lily of the valley flowers with green leaves in a natural setting" />
+                </div>
+                <div class="plant-info">
+                    <h2 class="plant-name">Lily of the Valley</h2>
+                    <p class="plant-latin">Convallaria majalis</p>
+                    
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="openTab(event, 'lily-definition')">Definition</button>
+                        <button class="tab-btn" onclick="openTab(event, 'lily-facts')">Fun Facts</button>
+                        <button class="tab-btn" onclick="openTab(event, 'lily-care')">Care</button>
+                    </div>
+                    
+                    <div id="lily-definition" class="tab-content active">
+                        <p>Lily of the Valley is a sweetly scented woodland flowering plant native to Europe and Asia. Its delicate white bell-shaped flowers and rich green leaves make it a favorite for shady gardens and floral arrangements, though all parts of the plant are poisonous if ingested.</p>
+                    </div>
+                    
+                    <div id="lily-facts" class="tab-content">
+                        <ul>
+                            <li>It's the national flower of Finland and the floral emblem of Yugoslavia.</li>
+                            <li>In Christian legend, the flowers grew from the tears of Mary at the crucifixion.</li>
+                            <li>The flower symbolizes humility and purity in Victorian flower language.</li>
+                            <li>Despite its beauty, it's highly toxic to pets and humans if consumed.</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="lily-care" class="tab-content">
+                        <ul>
+                            <li><strong>Sunlight:</strong> Partial to full shade</li>
+                            <li><strong>Water:</strong> Keep soil consistently moist</li>
+                            <li><strong>Soil:</strong> Rich, well-draining humus</li>
+                            <li><strong>Propagation:</strong> Divide rhizomes in fall</li>
+                            <li><strong>Hardiness:</strong> Zones 2-7</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gladiolus -->
+            <div class="plant-card" id="gladiolus">
+                <div class="plant-image">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2ede77cf-abf9-4b77-a603-154e156b0f43.png" alt="Tall gladiolus flower spikes in vibrant colors including pink, red, and white with sunlight highlighting the petals" />
+                </div>
+                <div class="plant-info">
+                    <h2 class="plant-name">Gladiolus</h2>
+                    <p class="plant-latin">Gladiolus spp.</p>
+                    
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="openTab(event, 'gladiolus-definition')">Definition</button>
+                        <button class="tab-btn" onclick="openTab(event, 'gladiolus-facts')">Fun Facts</button>
+                        <button class="tab-btn" onclick="openTab(event, 'gladiolus-care')">Care</button>
+                    </div>
+                    
+                    <div id="gladiolus-definition" class="tab-content active">
+                        <p>Gladiolus, also called sword lily, is a genus of perennial flowering plants known for their tall flower spikes and large, colorful blooms. Native to South Africa and Mediterranean Europe, they're popular as cut flowers and garden plants, with flowers in nearly every color.</p>
+                    </div>
+                    
+                    <div id="gladiolus-facts" class="tab-content">
+                        <ul>
+                            <li>The name comes from Latin "gladius" meaning sword, referring to the plant's sword-shaped leaves.</li>
+                            <li>In Victorian flower language, gladiolus symbolizes strength of character.</li>
+                            <li>The flower associated with 40th wedding anniversaries.</li>
+                            <li>Some species have edible flowers and can be grown as food crops.</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="gladiolus-care" class="tab-content">
+                        <ul>
+                            <li><strong>Sunlight:</strong> Full sun</li>
+                            <li><strong>Water:</strong> Keep soil moist but not waterlogged</li>
+                            <li><strong>Soil:</strong> Well-draining, fertile</li>
+                            <li><strong>Support:</strong> Stake tall varieties</li>
+                            <li><strong>Storage:</strong> Lift corms in colder zones (below 7)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- White Egret Orchid -->
+            <div class="plant-card" id="orchid">
+                <div class="plant-image">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e6b1f644-f34d-4f01-83e8-76bee4874e19.png" alt="Delicate white orchid flowers resembling flying egrets with intricate feather-like petals" />
+                </div>
+                <div class="plant-info">
+                    <h2 class="plant-name">White Egret Orchid</h2>
+                    <p class="plant-latin">Habenaria radiata</p>
+                    
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="openTab(event, 'orchid-definition')">Definition</button>
+                        <button class="tab-btn" onclick="openTab(event, 'orchid-facts')">Fun Facts</button>
+                        <button class="tab-btn" onclick="openTab(event, 'orchid-care')">Care</button>
+                    </div>
+                    
+                    <div id="orchid-definition" class="tab-content active">
+                        <p>The White Egret Orchid is a stunning terrestrial orchid native to Japan, Korea, and China. Its flowers resemble white egrets in flight, with fringed petals that give an appearance of feathers. This rare and protected species is highly sought after by orchid enthusiasts.</p>
+                    </div>
+                    
+                    <div id="orchid-facts" class="tab-content">
+                        <ul>
+                            <li>Also called "Sagisō" in Japan, meaning "heron orchid."</li>
+                            <li>The flower shape resembles the great egret (Ardea alba) in flight.</li>
+                            <li>Listed as a rare and protected species in Japan.</li>
+                            <li>Blooms for about 2-3 weeks in summer if properly cared for.</li>
+                        </ul>
+                    </div>
+                    
+                    <div id="orchid-care" class="tab-content">
+                        <ul>
+                            <li><strong>Sunlight:</strong> Bright indirect light</li>
+                            <li><strong>Water:</strong> Keep constantly moist during growth</li>
+                            <li><strong>Soil:</strong> Well-draining orchid mix with sphagnum</li>
+                            <li><strong>Dormancy:</strong> Reduce water after flowering</li>
+                            <li><strong>Humidity:</strong> High humidity preferred</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Botanical Wonders | Plant Encyclopedia</p>
+        <p>All images are for illustrative purposes only</p>
+        <p>Rahmat Taufik Akbar</p>
+    </footer>
+
+    <script>
+        // Tab functionality
+        function openTab(evt, tabName) {
+            // Get all tab content and hide them
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Get all tab buttons and remove active class
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show the current tab and add active class to the button
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetSection.offsetTop - 20,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
